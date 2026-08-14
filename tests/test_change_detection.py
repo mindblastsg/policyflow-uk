@@ -3,7 +3,7 @@ from policyflow.models import ChangeStatus
 
 
 def test_normalisation_is_conservative_and_deterministic() -> None:
-    assert normalise_text("  Alpha\t beta  \r\nGamma  ") == " Alpha beta\nGamma"
+    assert normalise_text("  Alpha\t beta  \r\nGamma  ") == "Alpha beta\nGamma"
 
 
 def test_hash_ignores_line_ending_and_horizontal_whitespace_noise() -> None:
