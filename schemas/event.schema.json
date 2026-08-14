@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://policyflow.uk/schemas/event.schema.json",
+  "title": "PolicyFlow Event",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "event_type",
+    "observed_at",
+    "source_class",
+    "evidence_refs",
+    "assertion_kind"
+  ],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "event_type": {"type": "string", "minLength": 1},
+    "title": {"type": ["string", "null"]},
+    "actor_entity_id": {"type": ["string", "null"]},
+    "flow_id": {"type": ["string", "null"]},
+    "previous_state": {"type": ["string", "null"]},
+    "new_state": {"type": ["string", "null"]},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "published_at": {"type": ["string", "null"], "format": "date-time"},
+    "event_at": {"type": ["string", "null"], "format": "date-time"},
+    "effective_at": {"type": ["string", "null"], "format": "date-time"},
+    "source_class": {
+      "type": "string",
+      "enum": ["authoritative_state", "formal_process", "political_signal", "impact_evidence"]
+    },
+    "assertion_kind": {
+      "type": "string",
+      "enum": ["SOURCE", "DERIVED", "MACHINE_EXTRACTED", "RESEARCHER", "HYPOTHESIS"]
+    },
+    "evidence_refs": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"type": "string", "minLength": 1},
+      "uniqueItems": true
+    },
+    "topic_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "affected_entity_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "extraction_confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "derived_by": {"type": ["string", "null"]},
+    "notes": {"type": ["string", "null"]}
+  }
+}

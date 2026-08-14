@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://policyflow.uk/schemas/flow.schema.json",
+  "title": "PolicyFlow Flow",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["flow_id", "name", "status", "event_ids", "created_at"],
+  "properties": {
+    "flow_id": {"type": "string", "minLength": 1},
+    "name": {"type": "string", "minLength": 1},
+    "summary": {"type": ["string", "null"]},
+    "status": {
+      "type": "string",
+      "enum": [
+        "IDEA", "ANNOUNCED", "UNDER_REVIEW", "CONSULTATION", "PROPOSED",
+        "LEGISLATING", "MADE", "IMPLEMENTING", "IN_FORCE", "AMENDED",
+        "DELAYED", "WITHDRAWN", "REPEALED", "SUPERSEDED"
+      ]
+    },
+    "event_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "lead_institution_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "topic_ids": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "created_at": {"type": "string", "format": "date-time"},
+    "updated_at": {"type": ["string", "null"], "format": "date-time"},
+    "flow_confidence": {"type": ["number", "null"], "minimum": 0, "maximum": 1},
+    "notes": {"type": ["string", "null"]}
+  }
+}

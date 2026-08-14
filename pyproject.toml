@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "policyflow-uk"
+version = "0.1.0"
+description = "Open event-driven infrastructure for tracking UK financial policy and regulatory flows"
+readme = "README.md"
+requires-python = ">=3.12"
+license = {text = "MIT"}
+dependencies = [
+  "beautifulsoup4>=4.12,<5",
+  "pydantic>=2.8,<3",
+  "requests>=2.32,<3"
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest>=8.3,<9",
+  "jsonschema>=4.23,<5"
+]
+
+[project.scripts]
+policyflow = "policyflow.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/policyflow"]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-q"

@@ -49,32 +49,73 @@ economic exposure
 
 ## Initial scope
 
-The first release is deliberately narrow. It will establish:
+The first release is deliberately narrow. It establishes:
 
 - a canonical event and flow ontology;
 - JSON Schemas for events, flows, entities and relationships;
 - source/version hashing and change detection;
 - a first FCA publication collector;
-- a small gold-standard example flow;
+- a synthetic gold-standard example flow;
 - deterministic tests around `NEW`, `CHANGED` and `UNCHANGED` observations;
 - documented methodology and source-confidence rules.
 
-The initial milestone is:
+The initial pipeline is:
 
 ```text
 official FCA source
       ↓
-collect publication
+collect publication index item
       ↓
-preserve raw observation
+preserve observable representation
       ↓
 hash + compare
       ↓
 NEW / CHANGED / UNCHANGED
       ↓
-emit PolicyFlow event
+emit source-level PolicyFlow event
       ↓
 validate against schema
+```
+
+Semantic classification such as `consultation_published` is intentionally a later stage. The collector itself only establishes what was observed and whether it changed.
+
+## Quick start
+
+Requires Python 3.12+.
+
+```bash
+git clone https://github.com/mindblastsg/policyflow-uk.git
+cd policyflow-uk
+python -m venv .venv
+source .venv/bin/activate
+python -m pip install -e '.[dev]'
+pytest
+```
+
+Run the first live collector:
+
+```bash
+policyflow ingest fca --limit 50
+```
+
+The first run emits `NEW` observations and source-level events. A local hash-state file is written under `.policyflow/state/`. Running the same command again should produce no change events unless the observable FCA listing items changed.
+
+To include unchanged observations:
+
+```bash
+policyflow ingest fca --limit 50 --include-unchanged
+```
+
+## Repository map
+
+```text
+AGENTS.md                 agent/research guardrails
+docs/                     ontology, methodology, sources, research agenda
+schemas/                  machine-readable core contracts
+src/policyflow/           collector, models, state and event pipeline
+data/examples/            synthetic gold-standard flow fixtures
+tests/                    deterministic fixture-based regression tests
+.github/workflows/        continuous integration
 ```
 
 ## Intended future source layers
@@ -87,6 +128,15 @@ validate against schema
 - Companies House and regulated-entity data
 - ONS, OBR and Bank of England economic datasets
 
+## Near-term roadmap
+
+1. Preserve full raw source observations and document versions.
+2. Add semantic event classification as a separately provenance-tracked stage.
+3. Add GOV.UK/HMT and Parliament collectors.
+4. Link events across institutions into the first real historical policy flows.
+5. Add temporal/delta queries and measure policy velocity.
+6. Only then begin the economic-exposure and market-materiality layer.
+
 ## Status
 
 **Experimental / pre-alpha.** The ontology and interfaces will change as real policy flows are tested.
@@ -97,4 +147,4 @@ PolicyFlow UK is an independent research project. It is not affiliated with or e
 
 ## Licence
 
-The project is intended to be open source. See `LICENSE` once the initial v0.1 scaffold lands.
+MIT. See `LICENSE`.
