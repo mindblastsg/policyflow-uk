@@ -20,15 +20,20 @@ def _document_id(url: str) -> str:
     return f"fca:{digest}"
 
 
+def _looks_like_publication_detail(href: str) -> bool:
+    parts = [part for part in href.strip("/").split("/") if part]
+    return len(parts) >= 3 and parts[0] == "publications"
+
+
 def parse_publication_index(
     html: str,
     *,
     observed_at: datetime | None = None,
 ) -> list[CollectedItem]:
-    """Parse publication links from a captured FCA publications page.
+    """Parse publication-detail links from a captured FCA publications page.
 
-    This intentionally performs minimal interpretation. It identifies
-    publication-page links and preserves their title/URL as the current
+    This intentionally performs minimal interpretation. It identifies likely
+    publication detail links and preserves their title/URL as the current
     observable representation of the item in the index.
     """
 
@@ -38,7 +43,7 @@ def parse_publication_index(
 
     for anchor in soup.find_all("a", href=True):
         href = str(anchor.get("href", "")).split("#", 1)[0].strip()
-        if not href.startswith("/publications/"):
+        if not _looks_like_publication_detail(href):
             continue
 
         title = " ".join(anchor.stripped_strings).strip()
