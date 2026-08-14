@@ -1,0 +1,84 @@
+{
+  "fixture_type": "synthetic_gold_standard",
+  "description": "Synthetic fixture used to test flow reasoning without asserting facts about a live policy process.",
+  "flow": {
+    "flow_id": "flow_demo_retail_investment",
+    "name": "Synthetic retail investment reform",
+    "status": "IMPLEMENTING",
+    "event_ids": [
+      "evt_demo_001",
+      "evt_demo_002",
+      "evt_demo_003",
+      "evt_demo_004",
+      "evt_demo_005"
+    ],
+    "lead_institution_ids": ["entity_demo_treasury", "entity_demo_regulator"],
+    "topic_ids": ["topic_demo_retail_investment"],
+    "created_at": "2026-01-01T00:00:00Z",
+    "updated_at": "2026-06-01T00:00:00Z",
+    "flow_confidence": 1.0,
+    "notes": "Synthetic fixture only. Dates and events are illustrative."
+  },
+  "events": [
+    {
+      "event_id": "evt_demo_001",
+      "event_type": "policy_announced",
+      "observed_at": "2026-01-01T09:00:00Z",
+      "event_at": "2026-01-01T09:00:00Z",
+      "source_class": "formal_process",
+      "assertion_kind": "SOURCE",
+      "evidence_refs": ["doc_demo_001"],
+      "title": "Reform announced",
+      "new_state": "ANNOUNCED"
+    },
+    {
+      "event_id": "evt_demo_002",
+      "event_type": "consultation_published",
+      "observed_at": "2026-02-01T09:00:00Z",
+      "event_at": "2026-02-01T09:00:00Z",
+      "source_class": "formal_process",
+      "assertion_kind": "SOURCE",
+      "evidence_refs": ["doc_demo_002"],
+      "title": "Consultation published",
+      "previous_state": "ANNOUNCED",
+      "new_state": "CONSULTATION"
+    },
+    {
+      "event_id": "evt_demo_003",
+      "event_type": "consultation_response_published",
+      "observed_at": "2026-04-01T09:00:00Z",
+      "event_at": "2026-04-01T09:00:00Z",
+      "source_class": "formal_process",
+      "assertion_kind": "SOURCE",
+      "evidence_refs": ["doc_demo_003"],
+      "title": "Consultation response published",
+      "previous_state": "CONSULTATION",
+      "new_state": "PROPOSED"
+    },
+    {
+      "event_id": "evt_demo_004",
+      "event_type": "final_rule_published",
+      "observed_at": "2026-05-01T09:00:00Z",
+      "event_at": "2026-05-01T09:00:00Z",
+      "source_class": "authoritative_state",
+      "assertion_kind": "SOURCE",
+      "evidence_refs": ["doc_demo_004"],
+      "title": "Final rule published",
+      "previous_state": "PROPOSED",
+      "new_state": "MADE"
+    },
+    {
+      "event_id": "evt_demo_005",
+      "event_type": "implementation_started",
+      "observed_at": "2026-06-01T09:00:00Z",
+      "event_at": "2026-06-01T09:00:00Z",
+      "effective_at": "2026-06-01T09:00:00Z",
+      "source_class": "authoritative_state",
+      "assertion_kind": "SOURCE",
+      "evidence_refs": ["doc_demo_005"],
+      "title": "Implementation begins",
+      "previous_state": "MADE",
+      "new_state": "IMPLEMENTING"
+    }
+  ]
+}
